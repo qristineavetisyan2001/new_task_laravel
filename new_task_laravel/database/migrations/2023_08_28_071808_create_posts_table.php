@@ -16,8 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('website_id');
             $table->string('title');
             $table->text('post_message');
-            $table->string('post_date_time');
             $table->foreign('website_id')->references('id')->on('websites')->onDelete('cascade');
+            $table->boolean("notification_sent")->default(0);
             $table->timestamps();
         });
     }

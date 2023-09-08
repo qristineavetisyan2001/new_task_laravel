@@ -11,8 +11,6 @@ class PostController extends Controller
         $newPost->title = $req->title;
         $newPost->post_message = $req->post_message;
         $newPost->website_id = $req->website_id;
-        $newPost->post_date_time = date("y-m-d H:i:s.u").microtime();
-
         $newPost->save();
 
         return 200;

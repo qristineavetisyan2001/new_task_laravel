@@ -18,9 +18,6 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SubscriptionController;
-use App\Http\Controllers\WebsiteController;
-use App\Http\Controllers\SentMailController;
-use App\Jobs\SendNewPostNotificationsJob;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

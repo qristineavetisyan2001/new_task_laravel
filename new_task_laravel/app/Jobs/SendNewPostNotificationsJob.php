@@ -32,6 +32,7 @@ class SendNewPostNotificationsJob implements ShouldQueue
     /**
      * Execute the job.
      */
+
     public function handle(): void
     {
         Mail::to($this->details["email"])->send(new MailNotify($this->details));

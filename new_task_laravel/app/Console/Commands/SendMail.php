@@ -33,8 +33,10 @@ class SendMail extends Command
      */
     public function handle()
     {
-        Post::where("created_at", ">", now()->subMinutes(10))->get()->each(function ($newPost) {
-            SentMailController::sentMail(WebsiteController::getFollowers($newPost->website_id), $newPost->post_date_time);
+        Post::where("notification_sent", "=", 0)->get()->each(function ($newPost) {
+            SentMailController::sentMail(WebsiteController::getFollowers($newPost->website_id), $newPost);
+            $newPost["notification_sent"] = 1;
+            $newPost->save();
         });
 
         SentMail::select("sent_mails.id", "sent_mails.user_id", "sent_mails.sent", "posts.title", "posts.website_id", "posts.post_message", "users.email")
