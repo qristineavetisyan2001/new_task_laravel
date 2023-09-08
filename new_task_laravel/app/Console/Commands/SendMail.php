@@ -7,7 +7,6 @@ use App\Http\Controllers\WebsiteController;
 use App\Jobs\SendNewPostNotificationsJob;
 use App\Models\Post;
 use App\Models\SentMail;
-use DateTime;
 use Illuminate\Console\Command;
 
 

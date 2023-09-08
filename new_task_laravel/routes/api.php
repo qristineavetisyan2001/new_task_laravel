@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Post;
-use App\Models\SentMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

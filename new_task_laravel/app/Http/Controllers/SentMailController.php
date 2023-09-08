@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
 use App\Models\SentMail;
 
 class SentMailController extends Controller
