@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('sent_mails', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('post_id');
-            $table->foreignId('user_id');
+            $table->foreignId('post_id')->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->boolean('sent');
+            $table->unique(['post_id', 'user_id']);
             $table->timestamps();
         });
     }

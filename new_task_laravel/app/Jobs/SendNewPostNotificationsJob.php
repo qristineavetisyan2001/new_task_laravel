@@ -2,7 +2,10 @@
 
 namespace App\Jobs;
 
+use App\Console\Commands\SendMail;
 use App\Mail\MailNotify;
+use App\Models\SentMail;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -18,13 +21,11 @@ class SendNewPostNotificationsJob implements ShouldQueue
      * Create a new job instance.
      */
 
-    private $notSentUser;
-    private $details;
+    private $notSentUsers;
 
-    public function __construct($notSentUser, $details)
+    public function __construct($notSentUsers)
     {
-        $this->notSentUser = $notSentUser;
-        $this->details = $details;
+        $this->notSentUsers = $notSentUsers;
     }
 
     /**
@@ -33,9 +34,19 @@ class SendNewPostNotificationsJob implements ShouldQueue
 
     public function handle(): void
     {
-        Mail::to($this->details["email"])->send(new MailNotify($this->details));
+        foreach($this->notSentUsers as $notSentUser) {
+            /** @var SentMail $notSentUser */
+            $user = $notSentUser->user;
+            $post = $notSentUser->post;
 
-        $this->notSentUser->sent = 1;
-        $this->notSentUser->save();
+            Mail::to($user->email)->send(new MailNotify([
+                "website_id" => $post->website_id,
+                "title" => $post->title,
+                "post_message" => $post->post_message
+            ]));
+
+            $notSentUser->sent = 1;
+            $notSentUser->save();
+        }
     }
 }
